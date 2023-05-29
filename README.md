@@ -4,6 +4,8 @@ Relay server for datagrams
 
 > **Note** Only for testing, not production ready
 
+Uses [Relay Serialize](https://github.com/piot/relay-serialize-c)
+
 ## Connection Flow
 
 * A listener tells the server that the user wants to receive incoming connect requests for a certain application and channel (to allow multiple listeners for each application). The channel is usually zero.
