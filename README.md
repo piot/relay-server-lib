@@ -2,7 +2,7 @@
 
 Relay server for datagrams
 
-**Note** Only for testing, not production ready
+> **Note** Only for testing, not production ready
 
 ## Connection Flow
 
