@@ -10,7 +10,7 @@
 #include <stdlib.h>
 
 struct RelayListener;
-struct RelayUserSession;
+struct GuiseSclUserSession;
 struct RelayAddress;
 struct ImprintAllocator;
 
@@ -28,14 +28,14 @@ void relayListenersInit(RelayListeners* self, struct ImprintAllocator* allocator
 // void relayListenersDestroy(RelayListeners* self);
 int relayListenersFind(const RelayListeners* self, RelaySerializeListenerId uniqueId,
                        struct RelayListener** outSession);
-int relayListenersCreate(RelayListeners* sessions, const struct RelayUserSession* userSession,
+int relayListenersCreate(RelayListeners* sessions, const struct GuiseSclUserSession* userSession,
                          RelaySerializeApplicationId applicationId, RelaySerializeChannelId channelId,
                          struct RelayListener** outSession);
 struct RelayListener* relayListenersFindUsingUserId(const RelayListeners* self,
                                                     RelaySerializeApplicationId applicationId,
                                                     RelaySerializeChannelId channelId, RelaySerializeUserId userId);
 
-struct RelayListener* relayListenersFindOrCreate(RelayListeners* self, const struct RelayUserSession* userSession,
+struct RelayListener* relayListenersFindOrCreate(RelayListeners* self, const struct GuiseSclUserSession* userSession,
                                                  RelaySerializeApplicationId applicationId,
                                                  RelaySerializeChannelId channelId);
 void relayListenersReset(RelayListeners* self);

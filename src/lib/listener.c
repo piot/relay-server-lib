@@ -10,7 +10,7 @@
 /// @param listenerId
 /// @param applicationId
 /// @param channelId
-void relayListenerInit(RelayListener* self, const struct RelayUserSession* providingUserSession,
+void relayListenerInit(RelayListener* self, const struct GuiseSclUserSession* providingUserSession,
                        RelaySerializeListenerId listenerId, RelaySerializeApplicationId applicationId,
                        RelaySerializeChannelId channelId)
 {

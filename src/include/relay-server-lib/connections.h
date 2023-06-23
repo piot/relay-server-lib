@@ -9,7 +9,7 @@
 #include <stdlib.h>
 
 struct RelayServerConnection;
-struct RelayUserSession;
+struct GuiseSclUserSession;
 
 typedef struct RelayServerConnections {
     struct RelayServerConnection* connections;
@@ -22,6 +22,6 @@ void relayServerConnectionsDestroy(RelayServerConnections* self);
 struct RelayServerConnection* relayServerConnectionsFindConnection(RelayServerConnections* self,
                                                                    RelayServerConnectionId id);
 struct RelayServerConnection* relayServerConnectionsFindOrCreateConnection(
-    RelayServerConnections* self, const struct RelayUserSession* initiatorUserSession,
+    RelayServerConnections* self, const struct GuiseSclUserSession* initiatorUserSession,
     RelaySerializeUserId targetUserId, RelaySerializeApplicationId applicationId, RelaySerializeChannelId channelId);
 #endif

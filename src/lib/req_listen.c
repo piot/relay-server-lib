@@ -12,8 +12,6 @@
 #include <relay-server-lib/listener.h>
 #include <relay-server-lib/req_listen.h>
 #include <relay-server-lib/server.h>
-#include <relay-server-lib/user.h>
-#include <relay-server-lib/user_session.h>
 
 /// A user listens for incoming connections (usually hosting a game)
 /// A listener is for a specific application and channel.
@@ -22,7 +20,7 @@
 /// @param inStream
 /// @param outStream
 /// @return
-int relayReqListen(RelayServer* self, const RelayUserSession* userSession, FldInStream* inStream,
+int relayReqListen(RelayServer* self, const struct GuiseSclUserSession* userSession, FldInStream* inStream,
                    FldOutStream* outStream)
 {
     RelaySerializeListenRequestFromClientToServer listenRequest;

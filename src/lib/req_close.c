@@ -9,8 +9,6 @@
 #include <relay-server-lib/connection.h>
 #include <relay-server-lib/req_close.h>
 #include <relay-server-lib/server.h>
-#include <relay-server-lib/user.h>
-#include <relay-server-lib/user_session.h>
 
 /// Listener wants the connection to be closed
 /// @param self
@@ -18,9 +16,13 @@
 /// @param inStream
 /// @param outStream
 /// @return
-int relayReqClose(RelayServer* self, const RelayUserSession* userSession, FldInStream* inStream,
+int relayReqClose(RelayServer* self, const struct RelayUserSession* userSession, FldInStream* inStream,
                   FldOutStream* outStream)
 {
+    (void) userSession;
+    (void) inStream;
+    (void) outStream;
+    (void) self;
 
     return 0;
 }

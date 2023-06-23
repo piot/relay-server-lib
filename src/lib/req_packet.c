@@ -10,11 +10,9 @@
 #include <relay-serialize/server_out.h>
 #include <relay-server-lib/connection.h>
 #include <relay-server-lib/req_packet.h>
-#include <relay-server-lib/req_user_login.h>
 #include <relay-server-lib/server.h>
-#include <relay-server-lib/user.h>
-#include <relay-server-lib/user_session.h>
 #include <relay-server-lib/utils.h>
+#include <guise-sessions-client/user_session.h>
 
 /// A packet is requested to be sent to the remote for that connection
 /// @param self
@@ -22,7 +20,7 @@
 /// @param inStream
 /// @param response
 /// @return
-int relayReqPacket(RelayServer* self, const RelayUserSession* userSession, FldInStream* inStream,
+int relayReqPacket(RelayServer* self, const GuiseSclUserSession* userSession, FldInStream* inStream,
                    RelayServerResponse* response)
 {
     RelaySerializeConnectionId connectionId;
@@ -33,7 +31,7 @@ int relayReqPacket(RelayServer* self, const RelayUserSession* userSession, FldIn
         return -4;
     }
 
-    const RelayUserSession* target = 0;
+    const struct GuiseSclUserSession* target = 0;
     if (foundConnection->initiator == userSession) {
         target = foundConnection->listener;
         if (foundConnection->phase == RelayServerConnectionPhaseConnecting) {

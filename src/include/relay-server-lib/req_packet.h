@@ -11,10 +11,10 @@
 struct RelayServer;
 struct FldOutStream;
 struct FldInStream;
-struct RelayUserSession;
+struct GuiseSclUserSession;
 struct RelayServerResponse;
 
-int relayReqPacket(struct RelayServer* self, const struct RelayUserSession* userSession, struct FldInStream* inStream,
+int relayReqPacket(struct RelayServer* self, const struct GuiseSclUserSession* userSession, struct FldInStream* inStream,
                  struct RelayServerResponse* response);
 
 #endif

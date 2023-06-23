@@ -10,8 +10,9 @@
 #include <relay-server-lib/listener.h>
 #include <relay-server-lib/listeners.h>
 #include <relay-server-lib/unique_id.h>
-#include <relay-server-lib/user.h>
-#include <relay-server-lib/user_session.h>
+#include <guise-sessions-client/client.h>
+#include <guise-sessions-client/user_session.h>
+#include <inttypes.h>
 
 /// Initialize the listener collection
 /// @param self
@@ -45,7 +46,7 @@ void relayListenersDestroy(RelayListeners* self)
 /// @param channelId
 /// @param outListener
 /// @return
-int relayListenersCreate(RelayListeners* self, const struct RelayUserSession* userSession,
+int relayListenersCreate(RelayListeners* self, const struct GuiseSclUserSession* userSession,
                          RelaySerializeApplicationId applicationId, RelaySerializeChannelId channelId,
                          RelayListener** outListener)
 {
@@ -80,7 +81,7 @@ int relayListenersFind(const RelayListeners* self, RelaySerializeListenerId uniq
 
     RelayListener* foundListener = &self->listeners[index];
     if (foundListener->id != uniqueId) {
-        CLOG_C_SOFT_ERROR(&self->log, "wrong user session id, got %016X but wanted %016X", uniqueId, foundListener->id);
+        CLOG_C_SOFT_ERROR(&self->log, "wrong user session id, got %" PRIx64 " but wanted %" PRIx64, uniqueId, foundListener->id)
     }
 
     *outSession = foundListener;
@@ -103,7 +104,7 @@ RelayListener* relayListenersFindUsingUserId(const RelayListeners* self, RelaySe
             continue;
         }
 
-        if (listener->providingUserSession->user->id != userId) {
+        if (listener->providingUserSession->userId != userId) {
             continue;
         }
 
@@ -121,11 +122,11 @@ RelayListener* relayListenersFindUsingUserId(const RelayListeners* self, RelaySe
 /// @param applicationId
 /// @param channelId
 /// @return
-struct RelayListener* relayListenersFindOrCreate(RelayListeners* self, const struct RelayUserSession* userSession,
+struct RelayListener* relayListenersFindOrCreate(RelayListeners* self, const struct GuiseSclUserSession* userSession,
                                                  RelaySerializeApplicationId applicationId,
                                                  RelaySerializeChannelId channelId)
 {
-    RelayListener* listener = relayListenersFindUsingUserId(self, applicationId, channelId, userSession->user->id);
+    RelayListener* listener = relayListenersFindUsingUserId(self, applicationId, channelId, userSession->userId);
     if (listener != 0) {
         return listener;
     }

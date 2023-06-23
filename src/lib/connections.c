@@ -4,8 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 #include <clog/clog.h>
 #include <relay-server-lib/connections.h>
-#include <relay-server-lib/user.h>
-#include <relay-server-lib/user_session.h>
+#include <guise-sessions-client/client.h>
+#include <guise-sessions-client/user_session.h>
 
 void relayServerConnectionsInit(RelayServerConnections* self, size_t maxCount)
 {
@@ -17,6 +17,7 @@ void relayServerConnectionsInit(RelayServerConnections* self, size_t maxCount)
 
 void relayServerConnectionsDestroy(RelayServerConnections* self)
 {
+    (void) self;
 }
 
 /// Looks up an existing connection from a connection ID
@@ -50,7 +51,7 @@ struct RelayServerConnection* relayServerConnectionsFindConnection(RelayServerCo
 /// @param channelId
 /// @return
 struct RelayServerConnection* relayServerConnectionsFindOrCreateConnection(
-    RelayServerConnections* self, const struct RelayUserSession* initiatorUserSession,
+    RelayServerConnections* self, const struct GuiseSclUserSession* initiatorUserSession,
     RelaySerializeUserId targetUserId, RelaySerializeApplicationId applicationId, RelaySerializeChannelId channelId)
 {
     for (size_t i = 0; i < self->capacityCount; ++i) {
@@ -64,7 +65,7 @@ struct RelayServerConnection* relayServerConnectionsFindOrCreateConnection(
         }
 
         if (connection->channelId == channelId && connection->applicationId == applicationId &&
-            connection->listener->user->id == targetUserId) {
+            connection->listener->userId == targetUserId) {
             return connection;
         }
     }

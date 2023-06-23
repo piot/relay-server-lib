@@ -5,18 +5,18 @@
 #ifndef RELAY_LISTENER_H
 #define RELAY_LISTENER_H
 
-struct RelayUserSession;
+struct GuiseSclUserSession;
 
 #include <relay-serialize/types.h>
 
 typedef struct RelayListener {
-    const struct RelayUserSession* providingUserSession;
+    const struct GuiseSclUserSession* providingUserSession;
     RelaySerializeListenerId id;
     RelaySerializeApplicationId applicationId;
     RelaySerializeChannelId channelId;
 } RelayListener;
 
-void relayListenerInit(RelayListener* self, const struct RelayUserSession* providingUserSession,
+void relayListenerInit(RelayListener* self, const struct GuiseSclUserSession* providingUserSession,
                        RelaySerializeListenerId listenerId, RelaySerializeApplicationId applicationId,
                        RelaySerializeChannelId channelId);
 

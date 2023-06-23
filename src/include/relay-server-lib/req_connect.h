@@ -11,8 +11,8 @@ struct RelayServer;
 struct FldOutStream;
 struct FldInStream;
 struct RelayServerResponse;
-struct RelayUserSession;
+struct GuiseSclUserSession;
 
-int relayReqConnect(struct RelayServer* self, const struct RelayUserSession* userSession, struct FldInStream* inStream,
+int relayReqConnect(struct RelayServer* self, const struct GuiseSclUserSession* userSession, struct FldInStream* inStream,
                     struct FldOutStream* outStream, struct RelayServerResponse* response);
 #endif

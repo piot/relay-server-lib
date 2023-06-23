@@ -8,7 +8,7 @@
 #include "unique_id.h"
 #include <relay-serialize/types.h>
 
-struct RelayUserSession;
+struct GuiseSclUserSession;
 
 typedef enum RelayServerConnectionPhase {
     RelayServerConnectionPhaseConnecting,
@@ -22,8 +22,8 @@ typedef struct RelayServerConnection {
     RelayServerConnectionId id;
     RelaySerializeApplicationId applicationId;
     RelaySerializeChannelId channelId;
-    struct RelayUserSession* initiator;
-    struct RelayUserSession* listener;
+    struct GuiseSclUserSession* initiator;
+    struct GuiseSclUserSession* listener;
     RelayServerConnectionPhase phase;
 } RelayServerConnection;
 

@@ -12,6 +12,7 @@ struct FldOutStream;
 struct FldInStream;
 struct RelayUserSession;
 
-int relayReqListen(struct RelayServer* self, const struct RelayUserSession* userSession, struct FldInStream* inStream,
+int relayReqListen(struct RelayServer* self, const struct GuiseSclUserSession* userSession, struct FldInStream* inStream,
                    struct FldOutStream* outStream);
+
 #endif

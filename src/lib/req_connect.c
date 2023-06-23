@@ -12,8 +12,6 @@
 #include <relay-server-lib/listeners.h>
 #include <relay-server-lib/req_connect.h>
 #include <relay-server-lib/server.h>
-#include <relay-server-lib/user.h>
-#include <relay-server-lib/user_session.h>
 #include <relay-server-lib/utils.h>
 
 /// A client wants to connect to another listener user (usually a host)
@@ -23,9 +21,11 @@
 /// @param inStream
 /// @param outStream
 /// @return
-int relayReqConnect(RelayServer* self, const RelayUserSession* userSession, FldInStream* inStream,
+int relayReqConnect(RelayServer* self, const struct GuiseSclUserSession* userSession, FldInStream* inStream,
                     FldOutStream* outStream, RelayServerResponse* response)
 {
+    (void) outStream;
+
     RelaySerializeConnectRequestFromClientToServer request;
 
     int err = relaySerializeServerInRequestConnect(inStream, &request);
@@ -34,7 +34,7 @@ int relayReqConnect(RelayServer* self, const RelayUserSession* userSession, FldI
     }
 
     RelayListener* listener = relayListenersFindUsingUserId(&self->listeners, request.appId, request.channelId,
-                                                            request.userId);
+                                                            request.connectToUserId);
 
     if (listener == 0) {
         // TODO: Send error to initiator
@@ -42,7 +42,7 @@ int relayReqConnect(RelayServer* self, const RelayUserSession* userSession, FldI
     }
 
     RelayServerConnection* connection = relayServerConnectionsFindOrCreateConnection(
-        &self->connections, userSession, request.userId, request.appId, request.channelId);
+        &self->connections, userSession, request.connectToUserId, request.appId, request.channelId);
 
     return relayServerSendConnectRequestToListener(connection, response);
 }

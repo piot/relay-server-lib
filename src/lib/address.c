@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <tiny-libc/tiny_libc.h>
 
-#if TORNADO_OS_WINDOWS
+#if defined TORNADO_OS_WINDOWS
 #include <Ws2tcpip.h>
 #endif
 
@@ -17,7 +17,7 @@ int relayAddressEqual(const RelayAddress* a, const RelayAddress* b)
 
 const char* relayAddressToString(const RelayAddress* self, char* temp, size_t maxCount)
 {
-    const char* converted = inet_ntop(AF_INET, &self->sin_addr, temp, maxCount - 6);
+    const char* converted = inet_ntop(AF_INET, &self->sin_addr, temp, (socklen_t) maxCount - 6);
 
     size_t len = tc_strlen(converted);
 

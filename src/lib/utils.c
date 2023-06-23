@@ -5,9 +5,9 @@
 #include <flood/out_stream.h>
 #include <relay-serialize/server_out.h>
 #include <relay-server-lib/connection.h>
-#include <relay-server-lib/user.h>
-#include <relay-server-lib/user_session.h>
+#include <guise-sessions-client/user_session.h>
 #include <relay-server-lib/utils.h>
+
 
 /// Send a connect request from an initiator to a listener
 /// @param foundConnection
@@ -21,7 +21,7 @@ int relayServerSendConnectRequestToListener(RelayServerConnection* foundConnecti
 
     RelaySerializeConnectRequestFromServerToListener data;
     data.debugRequestId = 0;
-    data.fromUserId = foundConnection->initiator->user->id;
+    data.fromUserId = foundConnection->initiator->userId;
     data.channelId = foundConnection->channelId;
     data.appId = foundConnection->applicationId;
     data.assignedConnectionId = foundConnection->id;

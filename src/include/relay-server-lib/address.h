@@ -5,7 +5,7 @@
 #ifndef RELAY_SERVER_ADDRESS_H
 #define RELAY_SERVER_ADDRESS_H
 
-#if TORNADO_OS_WINDOWS
+#if defined TORNADO_OS_WINDOWS
 #include <WinSock2.h>
 #include <Windows.h>
 #else
