@@ -10,9 +10,9 @@
 
 
 /// Send a connect request from an initiator to a listener
-/// @param foundConnection
-/// @param response
-/// @return
+/// @param foundConnection connection
+/// @param response response
+/// @return negative on error
 int relayServerSendConnectRequestToListener(RelayServerConnection* foundConnection, RelayServerResponse* response)
 {
     FldOutStream outStream;

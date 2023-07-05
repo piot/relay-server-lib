@@ -5,11 +5,11 @@
 #include <relay-server-lib/listener.h>
 
 /// Initializes a listener
-/// @param self
-/// @param providingUserSession
-/// @param listenerId
-/// @param applicationId
-/// @param channelId
+/// @param self listener
+/// @param providingUserSession the user session that is listening
+/// @param listenerId the listener id
+/// @param applicationId application id
+/// @param channelId channel id
 void relayListenerInit(RelayListener* self, const struct GuiseSclUserSession* providingUserSession,
                        RelaySerializeListenerId listenerId, RelaySerializeApplicationId applicationId,
                        RelaySerializeChannelId channelId)

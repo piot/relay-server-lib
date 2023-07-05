@@ -16,11 +16,11 @@
 
 /// A client wants to connect to another listener user (usually a host)
 /// Receiver must answer with accept (or send a packet on that connection) or close directly
-/// @param self
-/// @param userSession
-/// @param inStream
-/// @param outStream
-/// @return
+/// @param self server
+/// @param userSession user session that wants to connect
+/// @param inStream stream to read connect command from
+/// @param outStream response stream
+/// @return negative on error
 int relayReqConnect(RelayServer* self, const struct GuiseSclUserSession* userSession, FldInStream* inStream,
                     FldOutStream* outStream, RelayServerResponse* response)
 {

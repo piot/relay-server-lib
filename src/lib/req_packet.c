@@ -15,11 +15,11 @@
 #include <guise-sessions-client/user_session.h>
 
 /// A packet is requested to be sent to the remote for that connection
-/// @param self
-/// @param userSession
-/// @param inStream
-/// @param response
-/// @return
+/// @param self server
+/// @param userSession user session that wants to send a datagram
+/// @param inStream stream with datagram
+/// @param response the response
+/// @return negative on error
 int relayReqPacket(RelayServer* self, const GuiseSclUserSession* userSession, FldInStream* inStream,
                    RelayServerResponse* response)
 {
@@ -50,10 +50,10 @@ int relayReqPacket(RelayServer* self, const GuiseSclUserSession* userSession, Fl
     uint16_t packetOctetCount;
     fldInStreamReadUInt16(inStream, &packetOctetCount);
 
-    uint8_t buf[1200];
+    uint8_t buf[DATAGRAM_TRANSPORT_MAX_SIZE];
 
     FldOutStream outStream;
-    fldOutStreamInit(&outStream, buf, 1200);
+    fldOutStreamInit(&outStream, buf, DATAGRAM_TRANSPORT_MAX_SIZE);
 
     relaySerializeWriteCommand(&outStream, relaySerializeCmdPacketToClient, "prefix");
     RelaySerializeServerPacketFromServerToClient packetHeader;

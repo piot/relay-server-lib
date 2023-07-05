@@ -15,11 +15,11 @@
 
 /// A user listens for incoming connections (usually hosting a game)
 /// A listener is for a specific application and channel.
-/// @param self
-/// @param userSession
-/// @param inStream
-/// @param outStream
-/// @return
+/// @param self server
+/// @param userSession user session that wants to listn
+/// @param inStream stream to read listen request from
+/// @param outStream response stream
+/// @return negative on error
 int relayReqListen(RelayServer* self, const struct GuiseSclUserSession* userSession, FldInStream* inStream,
                    FldOutStream* outStream)
 {

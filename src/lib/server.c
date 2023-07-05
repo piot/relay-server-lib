@@ -40,20 +40,19 @@ static int readAndLookupUserSession(GuiseSclClient* client, const GuiseSclAddres
 }
 
 /// Handle incoming datagrams
-/// @param self
-/// @param address
-/// @param data
-/// @param len
-/// @param response
-/// @return
+/// @param self server
+/// @param address network address of request
+/// @param data payload
+/// @param len octet size of data
+/// @param response response
+/// @return negative on error
 int relayServerFeed(RelayServer* self, const GuiseSclAddress* address, const uint8_t* data, size_t len,
                     RelayServerResponse* response)
 {
     // CLOG_C_VERBOSE("relayServerFeed: feed: %s octetCount: %zu", relaySerializeCmdToString(data[0]), len)
-#define UDP_MAX_SIZE (1200)
-    static uint8_t buf[UDP_MAX_SIZE];
+    static uint8_t buf[DATAGRAM_TRANSPORT_MAX_SIZE];
     FldOutStream outStream;
-    fldOutStreamInit(&outStream, buf, UDP_MAX_SIZE);
+    fldOutStreamInit(&outStream, buf, DATAGRAM_TRANSPORT_MAX_SIZE);
     int result = -1;
     FldInStream inStream;
     fldInStreamInit(&inStream, data + 1, len - 1);
@@ -86,10 +85,10 @@ int relayServerFeed(RelayServer* self, const GuiseSclAddress* address, const uin
 
 /// Initialize the relay server
 /// Must already have a transport to a Guise Server and be logged in.
-/// @param self
-/// @param memory
-/// @param log
-/// @return
+/// @param self server
+/// @param memory allocator
+/// @param log target log
+/// @return negative on error
 int relayServerInit(RelayServer* self, struct ImprintAllocator* memory,
                     GuiseSerializeUserSessionId assignedSessionIdForThisRelayServer,
                     DatagramTransport transportToGuiseServer, Clog log)
@@ -103,7 +102,7 @@ int relayServerInit(RelayServer* self, struct ImprintAllocator* memory,
     Clog subLog;
     subLog.config = log.config;
 
-    guiseSclClientInit(&self->guiseSclClient, transportToGuiseServer);
+    guiseSclClientInit(&self->guiseSclClient, transportToGuiseServer, assignedSessionIdForThisRelayServer, subLog);
 
     relayServerConnectionsInit(&self->connections, 128);
     relayListenersInit(&self->listeners, memory, 128);

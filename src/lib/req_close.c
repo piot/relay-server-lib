@@ -11,11 +11,12 @@
 #include <relay-server-lib/server.h>
 
 /// Listener wants the connection to be closed
-/// @param self
-/// @param userSession
-/// @param inStream
-/// @param outStream
-/// @return
+/// @param self server
+/// @param userSession user session that wants to close the connection
+/// @param inStream stream to read from
+/// @param outStream response stream
+/// @return negative on error
+/// @note not implemented yet
 int relayReqClose(RelayServer* self, const struct RelayUserSession* userSession, FldInStream* inStream,
                   FldOutStream* outStream)
 {

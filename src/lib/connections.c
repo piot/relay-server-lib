@@ -22,9 +22,9 @@ void relayServerConnectionsDestroy(RelayServerConnections* self)
 
 /// Looks up an existing connection from a connection ID
 /// @note needs optimizing
-/// @param self
-/// @param id
-/// @return
+/// @param self relay server connections
+/// @param id connection id to find
+/// @return the found connection or NULL
 struct RelayServerConnection* relayServerConnectionsFindConnection(RelayServerConnections* self,
                                                                    RelayServerConnectionId id)
 {
@@ -44,12 +44,12 @@ struct RelayServerConnection* relayServerConnectionsFindConnection(RelayServerCo
 }
 
 /// Checks if a connection already exists between initiator and listener, if not it creates a new one
-/// @param self
-/// @param initiatorUserSession
-/// @param targetUserId
-/// @param applicationId
-/// @param channelId
-/// @return
+/// @param self server connections
+/// @param initiatorUserSession user session that wants to create a connection
+/// @param targetUserId the user id that it wants to connect to
+/// @param applicationId the application id
+/// @param channelId the channel
+/// @return NULL if it couldn't be find or created
 struct RelayServerConnection* relayServerConnectionsFindOrCreateConnection(
     RelayServerConnections* self, const struct GuiseSclUserSession* initiatorUserSession,
     RelaySerializeUserId targetUserId, RelaySerializeApplicationId applicationId, RelaySerializeChannelId channelId)

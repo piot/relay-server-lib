@@ -15,9 +15,9 @@
 #include <inttypes.h>
 
 /// Initialize the listener collection
-/// @param self
-/// @param allocator
-/// @param maxCount
+/// @param self relay listeners
+/// @param allocator allocator to create listeners array with
+/// @param maxCount the capacity of the number of listeners
 void relayListenersInit(RelayListeners* self, ImprintAllocator* allocator, size_t maxCount)
 {
     // self->log = log;
@@ -40,12 +40,12 @@ void relayListenersDestroy(RelayListeners* self)
 
 
 /// Creates a new listener
-/// @param self
-/// @param userSession
-/// @param applicationId
-/// @param channelId
-/// @param outListener
-/// @return
+/// @param self relay listeners
+/// @param userSession user session that wants to listen
+/// @param applicationId the application id of the executable that wants to listen
+/// @param channelId channel id
+/// @param outListener the created listener
+/// @return negative on error
 int relayListenersCreate(RelayListeners* self, const struct GuiseSclUserSession* userSession,
                          RelaySerializeApplicationId applicationId, RelaySerializeChannelId channelId,
                          RelayListener** outListener)
@@ -68,10 +68,10 @@ int relayListenersCreate(RelayListeners* self, const struct GuiseSclUserSession*
 }
 
 /// Find an existing listener using a listener ID
-/// @param self
-/// @param uniqueId
-/// @param outSession
-/// @return
+/// @param self relay listeners
+/// @param uniqueId unique listener id
+/// @param outSession the found listener
+/// @return negative on error
 int relayListenersFind(const RelayListeners* self, RelaySerializeListenerId uniqueId, RelayListener** outSession)
 {
     size_t index = relayUniqueIdGetIndex(uniqueId);
@@ -90,11 +90,11 @@ int relayListenersFind(const RelayListeners* self, RelaySerializeListenerId uniq
 }
 
 /// Finds a listener from a userId, applicationId and channelId
-/// @param self
-/// @param applicationId
-/// @param channelId
-/// @param userId
-/// @return
+/// @param self relay listeners
+/// @param applicationId application id
+/// @param channelId the channel id
+/// @param userId the target user id
+/// @return the found RelayListener or NULL
 RelayListener* relayListenersFindUsingUserId(const RelayListeners* self, RelaySerializeApplicationId applicationId,
                                              RelaySerializeChannelId channelId, RelaySerializeUserId userId)
 {
@@ -117,11 +117,11 @@ RelayListener* relayListenersFindUsingUserId(const RelayListeners* self, RelaySe
 }
 
 /// Finds an existing listener from userSession, applicationId and channelId
-/// @param self
-/// @param userSession
-/// @param applicationId
-/// @param channelId
-/// @return
+/// @param self relay listeners
+/// @param userSession user session that wants to listen
+/// @param applicationId application ID
+/// @param channelId channel ID
+/// @return the found or created listener or NULL
 struct RelayListener* relayListenersFindOrCreate(RelayListeners* self, const struct GuiseSclUserSession* userSession,
                                                  RelaySerializeApplicationId applicationId,
                                                  RelaySerializeChannelId channelId)
