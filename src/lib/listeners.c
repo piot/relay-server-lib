@@ -4,15 +4,15 @@
  *--------------------------------------------------------------------------------------------*/
 #include <clog/clog.h>
 #include <flood/in_stream.h>
+#include <guise-sessions-client/client.h>
+#include <guise-sessions-client/user_session.h>
 #include <imprint/allocator.h>
+#include <inttypes.h>
 #include <relay-serialize/serialize.h>
 #include <relay-server-lib/address.h>
 #include <relay-server-lib/listener.h>
 #include <relay-server-lib/listeners.h>
 #include <relay-server-lib/unique_id.h>
-#include <guise-sessions-client/client.h>
-#include <guise-sessions-client/user_session.h>
-#include <inttypes.h>
 
 /// Initialize the listener collection
 /// @param self relay listeners
@@ -37,7 +37,6 @@ void relayListenersDestroy(RelayListeners* self)
 {
     self->capacityCount = 0;
 }
-
 
 /// Creates a new listener
 /// @param self relay listeners
@@ -81,7 +80,8 @@ int relayListenersFind(const RelayListeners* self, RelaySerializeListenerId uniq
 
     RelayListener* foundListener = &self->listeners[index];
     if (foundListener->id != uniqueId) {
-        CLOG_C_SOFT_ERROR(&self->log, "wrong user session id, got %" PRIx64 " but wanted %" PRIx64, uniqueId, foundListener->id)
+        CLOG_C_SOFT_ERROR(&self->log, "wrong user session id, got %" PRIx64 " but wanted %" PRIx64, uniqueId,
+                          foundListener->id)
     }
 
     *outSession = foundListener;

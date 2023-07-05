@@ -5,6 +5,7 @@
 #include <clog/clog.h>
 #include <flood/in_stream.h>
 #include <flood/out_stream.h>
+#include <guise-sessions-client/user_session.h>
 #include <relay-serialize/commands.h>
 #include <relay-serialize/serialize.h>
 #include <relay-serialize/server_out.h>
@@ -12,7 +13,6 @@
 #include <relay-server-lib/req_packet.h>
 #include <relay-server-lib/server.h>
 #include <relay-server-lib/utils.h>
-#include <guise-sessions-client/user_session.h>
 
 /// A packet is requested to be sent to the remote for that connection
 /// @param self server

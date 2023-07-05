@@ -3,11 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 #include <flood/out_stream.h>
+#include <guise-sessions-client/user_session.h>
 #include <relay-serialize/server_out.h>
 #include <relay-server-lib/connection.h>
-#include <guise-sessions-client/user_session.h>
 #include <relay-server-lib/utils.h>
-
 
 /// Send a connect request from an initiator to a listener
 /// @param foundConnection connection

@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 #include <clog/clog.h>
-#include <relay-server-lib/connections.h>
 #include <guise-sessions-client/client.h>
 #include <guise-sessions-client/user_session.h>
+#include <relay-server-lib/connections.h>
 
 void relayServerConnectionsInit(RelayServerConnections* self, size_t maxCount)
 {
