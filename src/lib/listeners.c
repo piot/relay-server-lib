@@ -9,7 +9,6 @@
 #include <imprint/allocator.h>
 #include <inttypes.h>
 #include <relay-serialize/serialize.h>
-#include <relay-server-lib/address.h>
 #include <relay-server-lib/listener.h>
 #include <relay-server-lib/listeners.h>
 #include <relay-server-lib/unique_id.h>

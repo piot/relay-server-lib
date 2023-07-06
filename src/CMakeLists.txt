@@ -12,7 +12,4 @@ add_subdirectory("deps/piot/monotonic-time-c/src/lib")
 add_subdirectory("deps/piot/relay-serialize-c/src/lib")
 add_subdirectory("deps/piot/secure-random-c/src/lib")
 
-
 add_subdirectory("lib")
-# add_subdirectory("test")
-# add_subdirectory("examples")
