@@ -23,7 +23,6 @@ typedef struct RelayServer {
     RelayServerConnections connections;
     RelayListeners listeners;
     Clog log;
-    RelaySerializeServerChallenge secretChallengeKey;
 } RelayServer;
 
 int relayServerInit(RelayServer* self, struct ImprintAllocator* memory, GuiseSerializeUserSessionId loginForThisServer,

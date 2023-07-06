@@ -18,7 +18,6 @@
 #include <relay-server-lib/req_packet.h>
 #include <relay-server-lib/server.h>
 #include <relay-server-lib/utils.h>
-#include <secure-random/secure_random.h>
 
 static int readAndLookupUserSession(GuiseSclClient* client, const GuiseSclAddress* address, FldInStream* inStream,
                                     const GuiseSclUserSession** out)
@@ -96,8 +95,6 @@ int relayServerInit(RelayServer* self, struct ImprintAllocator* memory,
     (void) assignedSessionIdForThisRelayServer;
 
     self->log = log;
-
-    self->secretChallengeKey = secureRandomUInt64();
 
     Clog subLog;
     subLog.config = log.config;
