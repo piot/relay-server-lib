@@ -46,7 +46,7 @@ static int readAndLookupUserSession(GuiseSclClient* client, const GuiseSclAddres
 /// @param len octet size of data
 /// @param response response
 /// @return negative on error
-int relayServerFeed(RelayServer* self, const GuiseSclAddress* address, const uint8_t* data, size_t len,
+int relayServerFeed(RelayServer* self, const RelayAddress* address, const uint8_t* data, size_t len,
                     RelayServerResponse* response)
 {
     // CLOG_C_VERBOSE("relayServerFeed: feed: %s octetCount: %zu", relaySerializeCmdToString(data[0]), len)

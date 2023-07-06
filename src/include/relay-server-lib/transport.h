@@ -8,9 +8,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include <guise-sessions-client/address.h>
+#include <relay-server-lib/address.h>
 
-typedef int (*relayServerSendFn)(void* self, const GuiseSclAddress* address, const uint8_t* data, size_t size);
+typedef int (*relayServerSendFn)(void* self, const RelayAddress* address, const uint8_t* data, size_t size);
 typedef struct RelayServerSendDatagram {
     relayServerSendFn send;
     void* self;

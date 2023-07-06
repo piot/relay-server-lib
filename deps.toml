@@ -31,12 +31,11 @@ version = "*"
 name = 'piot/guise-session-client-c'
 version = "*"
 
-
 [[dependencies]]
 name = 'piot/datagram-transport-c'
 version = "*"
 
-
 [[development]]
 name = 'piot/udp-server-c'
 version = "*"
+

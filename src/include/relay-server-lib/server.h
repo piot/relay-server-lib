@@ -30,7 +30,7 @@ int relayServerInit(RelayServer* self, struct ImprintAllocator* memory, GuiseSer
                     DatagramTransport transportToGuiseServer, Clog log);
 void relayServerDestroy(RelayServer* self);
 void relayServerReset(RelayServer* self);
-int relayServerFeed(RelayServer* self, const GuiseSclAddress* address, const uint8_t* data, size_t len,
+int relayServerFeed(RelayServer* self, const RelayAddress* address, const uint8_t* data, size_t len,
                     struct RelayServerResponse* response);
 
 #endif
