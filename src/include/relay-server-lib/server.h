@@ -31,5 +31,6 @@ void relayServerDestroy(RelayServer* self);
 void relayServerReset(RelayServer* self);
 int relayServerFeed(RelayServer* self, const RelayAddress* address, const uint8_t* data, size_t len,
                     struct RelayServerResponse* response);
+void relayServerUpdate(RelayServer* self);
 
 #endif

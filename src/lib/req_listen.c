@@ -12,6 +12,7 @@
 #include <relay-server-lib/listener.h>
 #include <relay-server-lib/req_listen.h>
 #include <relay-server-lib/server.h>
+#include <inttypes.h>
 
 /// A user listens for incoming connections (usually hosting a game)
 /// A listener is for a specific application and channel.
@@ -32,6 +33,8 @@ int relayReqListen(RelayServer* self, const struct GuiseSclUserSession* userSess
 
     RelayListener* listener = relayListenersFindOrCreate(&self->listeners, userSession, listenRequest.appId,
                                                          listenRequest.channelId);
+
+    CLOG_C_DEBUG(&self->log, "accepted listener %" PRIX64, listener->id)
 
     RelaySerializeListenResponseFromServerToListener response;
     response.requestId = listenRequest.requestId;

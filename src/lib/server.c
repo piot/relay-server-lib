@@ -58,6 +58,9 @@ int relayServerFeed(RelayServer* self, const RelayAddress* address, const uint8_
     const GuiseSclUserSession* foundUserSession;
     int err = readAndLookupUserSession(&self->guiseSclClient, address, &inStream, &foundUserSession);
     if (err < 0) {
+        if (err == -1) {
+            return 0;
+        }
         return err;
     }
 
@@ -105,6 +108,11 @@ int relayServerInit(RelayServer* self, struct ImprintAllocator* memory,
     relayListenersInit(&self->listeners, memory, 128);
 
     return 0;
+}
+
+void relayServerUpdate(RelayServer* self)
+{
+    guiseSclClientUpdate(&self->guiseSclClient);
 }
 
 void relayServerReset(RelayServer* self)

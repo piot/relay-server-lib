@@ -22,6 +22,7 @@ void relayListenersInit(RelayListeners* self, ImprintAllocator* allocator, size_
     // self->log = log;
     self->capacityCount = maxCount;
     self->listeners = IMPRINT_ALLOC_TYPE_COUNT(allocator, RelayListener, self->capacityCount);
+    relayListenersReset(self);
 }
 
 void relayListenersReset(RelayListeners* self)
