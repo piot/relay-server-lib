@@ -74,7 +74,7 @@ int relayServerFeed(RelayServer* self, const RelayAddress* address, const uint8_
             result = relayReqListen(self, foundUserSession, &inStream, &outStream);
             break;
         default:
-            CLOG_C_SOFT_ERROR(&self->log, "relayServerFeed: unknown command %02X", data[0]);
+            CLOG_C_SOFT_ERROR(&self->log, "relayServerFeed: unknown command %02X", data[0])
             return 0;
     }
 
