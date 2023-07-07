@@ -42,7 +42,7 @@ int relayReqConnect(RelayServer* self, const struct GuiseSclUserSession* userSes
     }
 
     RelayServerConnection* connection = relayServerConnectionsFindOrCreateConnection(
-        &self->connections, userSession, request.connectToUserId, request.appId, request.channelId);
+        &self->connections, userSession, request.connectToUserId, listener,request.appId, request.channelId);
 
-    return relayServerSendConnectRequestToListener(connection, response);
+    return relayServerSendConnectRequestToListener(listener, connection, response);
 }

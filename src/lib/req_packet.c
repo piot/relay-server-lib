@@ -32,16 +32,16 @@ int relayReqPacket(RelayServer* self, const GuiseSclUserSession* userSession, Fl
     }
 
     const struct GuiseSclUserSession* target = 0;
-    if (foundConnection->initiator == userSession) {
-        target = foundConnection->listener;
+    if (foundConnection->initiatorUserSession == userSession) {
+        target = foundConnection->listenerUserSession;
         if (foundConnection->phase == RelayServerConnectionPhaseConnecting) {
             // listener has not accepted the connection, so send request
-            return relayServerSendConnectRequestToListener(foundConnection, response);
+            return relayServerSendConnectRequestToListener(foundConnection->listener, foundConnection, response);
         }
-    } else if (foundConnection->listener == userSession) {
+    } else if (foundConnection->listenerUserSession == userSession) {
         // If listener is sending to an initiator and knows the connection handle, the listener has
         // implicitly accepted it
-        target = foundConnection->initiator;
+        target = foundConnection->initiatorUserSession;
         foundConnection->phase = RelayServerConnectionPhaseAcceptedByListener;
     } else {
         CLOG_C_NOTICE(&self->log, "not allowed to send packets on this connection")

@@ -6,13 +6,15 @@
 #include <guise-sessions-client/user_session.h>
 #include <relay-serialize/server_out.h>
 #include <relay-server-lib/connection.h>
+#include <relay-server-lib/listener.h>
 #include <relay-server-lib/utils.h>
 
 /// Send a connect request from an initiator to a listener
 /// @param foundConnection connection
 /// @param response response
 /// @return negative on error
-int relayServerSendConnectRequestToListener(RelayServerConnection* foundConnection, RelayServerResponse* response)
+int relayServerSendConnectRequestToListener(RelayListener* listener, RelayServerConnection* foundConnection,
+                                            RelayServerResponse* response)
 {
     FldOutStream outStream;
     uint8_t buf[512];
@@ -20,15 +22,14 @@ int relayServerSendConnectRequestToListener(RelayServerConnection* foundConnecti
 
     RelaySerializeConnectRequestFromServerToListener data;
     data.debugRequestId = 0;
-    data.fromUserId = foundConnection->initiator->userId;
-    data.channelId = foundConnection->channelId;
-    data.appId = foundConnection->applicationId;
-    data.assignedConnectionId = foundConnection->id;
+    data.fromUserId = foundConnection->initiatorUserSession->userId;
+    data.listenerId = listener->id;
+    data.connectionId = foundConnection->id;
 
     int err = relaySerializeServerOutConnectRequestToListener(&outStream, data);
     if (err < 0) {
         return err;
     }
-    return response->sendDatagram.send(response->sendDatagram.self, &foundConnection->listener->address, buf,
+    return response->sendDatagram.send(response->sendDatagram.self, &foundConnection->listenerUserSession->address, buf,
                                        outStream.pos);
 }

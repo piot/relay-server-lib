@@ -8,12 +8,14 @@
 #include <relay-server-lib/transport.h>
 
 struct RelayServerConnection;
+struct RelayListener;
 
 typedef struct RelayServerResponse {
     RelayServerSendDatagram sendDatagram;
 } RelayServerResponse;
 
-int relayServerSendConnectRequestToListener(struct RelayServerConnection* foundConnection,
+int relayServerSendConnectRequestToListener(struct RelayListener* listener,
+                                            struct RelayServerConnection* foundConnection,
                                             struct RelayServerResponse* response);
 
 #endif

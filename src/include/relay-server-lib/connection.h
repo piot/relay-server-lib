@@ -9,6 +9,7 @@
 #include <relay-serialize/types.h>
 
 struct GuiseSclUserSession;
+struct RelayListener;
 
 typedef enum RelayServerConnectionPhase {
     RelayServerConnectionPhaseConnecting,
@@ -22,8 +23,9 @@ typedef struct RelayServerConnection {
     RelayServerConnectionId id;
     RelaySerializeApplicationId applicationId;
     RelaySerializeChannelId channelId;
-    struct GuiseSclUserSession* initiator;
-    struct GuiseSclUserSession* listener;
+    struct GuiseSclUserSession* initiatorUserSession;
+    struct GuiseSclUserSession* listenerUserSession;
+    struct RelayListener* listener;
     RelayServerConnectionPhase phase;
 } RelayServerConnection;
 

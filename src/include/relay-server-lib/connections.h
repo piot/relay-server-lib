@@ -10,6 +10,7 @@
 
 struct RelayServerConnection;
 struct GuiseSclUserSession;
+struct RelayListener;
 
 typedef struct RelayServerConnections {
     struct RelayServerConnection* connections;
@@ -23,5 +24,6 @@ struct RelayServerConnection* relayServerConnectionsFindConnection(RelayServerCo
                                                                    RelayServerConnectionId id);
 struct RelayServerConnection* relayServerConnectionsFindOrCreateConnection(
     RelayServerConnections* self, const struct GuiseSclUserSession* initiatorUserSession,
-    RelaySerializeUserId targetUserId, RelaySerializeApplicationId applicationId, RelaySerializeChannelId channelId);
+    RelaySerializeUserId targetUserId, struct RelayListener* listener, RelaySerializeApplicationId applicationId,
+    RelaySerializeChannelId channelId);
 #endif

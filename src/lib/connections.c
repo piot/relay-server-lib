@@ -52,20 +52,22 @@ struct RelayServerConnection* relayServerConnectionsFindConnection(RelayServerCo
 /// @return NULL if it couldn't be find or created
 struct RelayServerConnection* relayServerConnectionsFindOrCreateConnection(
     RelayServerConnections* self, const struct GuiseSclUserSession* initiatorUserSession,
-    RelaySerializeUserId targetUserId, RelaySerializeApplicationId applicationId, RelaySerializeChannelId channelId)
+    RelaySerializeUserId targetUserId, struct RelayListener* listener, RelaySerializeApplicationId applicationId,
+    RelaySerializeChannelId channelId)
 {
+    (void) listener;
     for (size_t i = 0; i < self->capacityCount; ++i) {
         RelayServerConnection* connection = &self->connections[i];
-        if (connection->initiator == 0) {
+        if (connection->initiatorUserSession == 0) {
             continue;
         }
 
-        if (connection->initiator != initiatorUserSession) {
+        if (connection->initiatorUserSession != initiatorUserSession) {
             continue;
         }
 
         if (connection->channelId == channelId && connection->applicationId == applicationId &&
-            connection->listener->userId == targetUserId) {
+            connection->listenerUserSession->userId == targetUserId) {
             return connection;
         }
     }
