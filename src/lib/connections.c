@@ -6,6 +6,7 @@
 #include <guise-sessions-client/client.h>
 #include <guise-sessions-client/user_session.h>
 #include <relay-server-lib/connections.h>
+#include <inttypes.h>
 
 void relayServerConnectionsInit(RelayServerConnections* self, size_t maxCount)
 {
@@ -30,7 +31,7 @@ struct RelayServerConnection* relayServerConnectionsFindConnection(RelayServerCo
 {
     size_t index = relayUniqueIdGetIndex(id);
     if (index >= self->capacityCount) {
-        CLOG_SOFT_ERROR("illegal id %016llX", id)
+        CLOG_SOFT_ERROR("illegal id %" PRIX64, id)
         return 0;
     }
 
