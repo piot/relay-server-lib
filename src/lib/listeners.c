@@ -17,11 +17,12 @@
 /// @param self relay listeners
 /// @param allocator allocator to create listeners array with
 /// @param maxCount the capacity of the number of listeners
-void relayListenersInit(RelayListeners* self, ImprintAllocator* allocator, size_t maxCount)
+void relayListenersInit(RelayListeners* self, ImprintAllocator* allocator, size_t maxCount, Clog log)
 {
     // self->log = log;
     self->capacityCount = maxCount;
     self->listeners = IMPRINT_ALLOC_TYPE_COUNT(allocator, RelayListener, self->capacityCount);
+    self->log = log;
     relayListenersReset(self);
 }
 
@@ -135,6 +136,9 @@ struct RelayListener* relayListenersFindOrCreate(RelayListeners* self, const str
     if (err < 0) {
         return 0;
     }
+
+    CLOG_C_DEBUG(&self->log, "found or created listener for userId: %" PRIX64 " assigned to listener id: %" PRIX64,
+                 userSession->userId, listener->id)
 
     return listener;
 }

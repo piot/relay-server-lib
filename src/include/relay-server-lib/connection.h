@@ -23,9 +23,9 @@ typedef struct RelayServerConnection {
     RelayServerConnectionId id;
     RelaySerializeApplicationId applicationId;
     RelaySerializeChannelId channelId;
-    struct GuiseSclUserSession* initiatorUserSession;
-    struct GuiseSclUserSession* listenerUserSession;
-    struct RelayListener* listener;
+    RelaySerializeRequestId createdFromRequestId;
+    const struct GuiseSclUserSession* initiatorUserSession;
+    const struct RelayListener* listener;
     RelayServerConnectionPhase phase;
 } RelayServerConnection;
 

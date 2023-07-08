@@ -5,6 +5,9 @@
 #include <clog/clog.h>
 #include <flood/in_stream.h>
 #include <flood/out_stream.h>
+#include <guise-sessions-client/client.h>
+#include <guise-sessions-client/user_session.h>
+#include <inttypes.h>
 #include <relay-serialize/serialize.h>
 #include <relay-serialize/server_in.h>
 #include <relay-server-lib/connection.h>
@@ -32,17 +35,25 @@ int relayReqConnect(RelayServer* self, const struct GuiseSclUserSession* userSes
     if (err < 0) {
         return err;
     }
+    CLOG_C_VERBOSE(&self->log, "reqConnect: %" PRIX64 " appId: %" PRIX64 " requestId: %02X", request.connectToUserId,
+                   request.appId, request.channelId)
 
     RelayListener* listener = relayListenersFindUsingUserId(&self->listeners, request.appId, request.channelId,
                                                             request.connectToUserId);
 
     if (listener == 0) {
         // TODO: Send error to initiator
+        CLOG_C_SOFT_ERROR(&self->log, "there is no listener for userID: %" PRIX64, request.connectToUserId)
         return -4;
     }
 
     RelayServerConnection* connection = relayServerConnectionsFindOrCreateConnection(
-        &self->connections, userSession, request.connectToUserId, listener,request.appId, request.channelId);
+        &self->connections, userSession, request.connectToUserId, listener, request.appId, request.channelId,
+        request.requestId);
+
+    CLOG_EXECUTE(char tempAddrString[32];)
+    CLOG_C_DEBUG(&self->log, "sending connect request to listener %" PRIX64 " on IP:%s", listener->id,
+                 guiseSclAddressToString(&listener->providingUserSession->address, tempAddrString, 32))
 
     return relayServerSendConnectRequestToListener(listener, connection, response);
 }

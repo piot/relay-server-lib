@@ -13,7 +13,7 @@
 /// @param foundConnection connection
 /// @param response response
 /// @return negative on error
-int relayServerSendConnectRequestToListener(RelayListener* listener, RelayServerConnection* foundConnection,
+int relayServerSendConnectRequestToListener(const RelayListener* listener, RelayServerConnection* foundConnection,
                                             RelayServerResponse* response)
 {
     FldOutStream outStream;
@@ -21,7 +21,7 @@ int relayServerSendConnectRequestToListener(RelayListener* listener, RelayServer
     fldOutStreamInit(&outStream, buf, 512);
 
     RelaySerializeConnectRequestFromServerToListener data;
-    data.debugRequestId = 0;
+    data.debugRequestId = foundConnection->createdFromRequestId;
     data.fromUserId = foundConnection->initiatorUserSession->userId;
     data.listenerId = listener->id;
     data.connectionId = foundConnection->id;
@@ -30,6 +30,6 @@ int relayServerSendConnectRequestToListener(RelayListener* listener, RelayServer
     if (err < 0) {
         return err;
     }
-    return response->sendDatagram.send(response->sendDatagram.self, &foundConnection->listenerUserSession->address, buf,
-                                       outStream.pos);
+    return response->sendDatagram.send(response->sendDatagram.self,
+                                       &foundConnection->listener->providingUserSession->address, buf, outStream.pos);
 }

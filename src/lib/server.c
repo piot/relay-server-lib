@@ -11,8 +11,8 @@
 #include <guise-sessions-client/user_sessions.h>
 #include <imprint/allocator.h>
 #include <relay-serialize/commands.h>
+#include <relay-serialize/debug.h>
 #include <relay-server-lib/address.h>
-#include <relay-server-lib/req_challenge.h>
 #include <relay-server-lib/req_connect.h>
 #include <relay-server-lib/req_listen.h>
 #include <relay-server-lib/req_packet.h>
@@ -48,7 +48,7 @@ static int readAndLookupUserSession(GuiseSclClient* client, const GuiseSclAddres
 int relayServerFeed(RelayServer* self, const RelayAddress* address, const uint8_t* data, size_t len,
                     RelayServerResponse* response)
 {
-    // CLOG_C_VERBOSE("relayServerFeed: feed: %s octetCount: %zu", relaySerializeCmdToString(data[0]), len)
+    CLOG_C_VERBOSE(&self->log, "relayServerFeed: feed: %s octetCount: %zu", relaySerializeCmdToString(data[0]), len)
     static uint8_t buf[DATAGRAM_TRANSPORT_MAX_SIZE];
     FldOutStream outStream;
     fldOutStreamInit(&outStream, buf, DATAGRAM_TRANSPORT_MAX_SIZE);
@@ -82,6 +82,10 @@ int relayServerFeed(RelayServer* self, const RelayAddress* address, const uint8_
         return result;
     }
 
+    if (outStream.pos == 0) {
+        return result;
+    }
+
     return response->sendDatagram.send(response->sendDatagram.self, address, outStream.octets, outStream.pos);
 }
 
@@ -104,8 +108,8 @@ int relayServerInit(RelayServer* self, struct ImprintAllocator* memory,
 
     guiseSclClientInit(&self->guiseSclClient, transportToGuiseServer, assignedSessionIdForThisRelayServer, subLog);
 
-    relayServerConnectionsInit(&self->connections, 128);
-    relayListenersInit(&self->listeners, memory, 128);
+    relayServerConnectionsInit(&self->connections, 128, subLog);
+    relayListenersInit(&self->listeners, memory, 128, subLog);
 
     return 0;
 }

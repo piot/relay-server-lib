@@ -5,12 +5,13 @@
 #include <clog/clog.h>
 #include <guise-sessions-client/client.h>
 #include <guise-sessions-client/user_session.h>
-#include <relay-server-lib/connections.h>
 #include <inttypes.h>
+#include <relay-server-lib/connections.h>
+#include <relay-server-lib/listener.h>
 
-void relayServerConnectionsInit(RelayServerConnections* self, size_t maxCount)
+void relayServerConnectionsInit(RelayServerConnections* self, size_t maxCount, Clog log)
 {
-    // self->log = log;
+    self->log = log;
     self->capacityCount = maxCount;
     self->connections = tc_malloc_type_count(RelayServerConnection, self->capacityCount);
     tc_mem_clear_type_n(self->connections, self->capacityCount);
@@ -54,7 +55,7 @@ struct RelayServerConnection* relayServerConnectionsFindConnection(RelayServerCo
 struct RelayServerConnection* relayServerConnectionsFindOrCreateConnection(
     RelayServerConnections* self, const struct GuiseSclUserSession* initiatorUserSession,
     RelaySerializeUserId targetUserId, struct RelayListener* listener, RelaySerializeApplicationId applicationId,
-    RelaySerializeChannelId channelId)
+    RelaySerializeChannelId channelId, RelaySerializeRequestId requestId)
 {
     (void) listener;
     for (size_t i = 0; i < self->capacityCount; ++i) {
@@ -68,7 +69,24 @@ struct RelayServerConnection* relayServerConnectionsFindOrCreateConnection(
         }
 
         if (connection->channelId == channelId && connection->applicationId == applicationId &&
-            connection->listenerUserSession->userId == targetUserId) {
+            connection->listener->providingUserSession->userId == targetUserId) {
+            return connection;
+        }
+    }
+
+    for (size_t i = 0; i < self->capacityCount; ++i) {
+        RelayServerConnection* connection = &self->connections[i];
+        if (connection->initiatorUserSession == 0) {
+            connection->initiatorUserSession = initiatorUserSession;
+            connection->channelId = channelId;
+            connection->applicationId = applicationId;
+            connection->listener = listener;
+            connection->id = relayGenerateUniqueIdFromIndex(i);
+            connection->createdFromRequestId = requestId;
+            CLOG_C_DEBUG(&self->log,
+                         "created connection %" PRIX64 " initiator session: %" PRIX64 " listener session: %" PRIX64,
+                         connection->id, connection->initiatorUserSession->userSessionId,
+                         connection->listener->providingUserSession->userSessionId)
             return connection;
         }
     }

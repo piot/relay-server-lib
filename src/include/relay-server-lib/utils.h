@@ -14,7 +14,7 @@ typedef struct RelayServerResponse {
     RelayServerSendDatagram sendDatagram;
 } RelayServerResponse;
 
-int relayServerSendConnectRequestToListener(struct RelayListener* listener,
+int relayServerSendConnectRequestToListener(const struct RelayListener* listener,
                                             struct RelayServerConnection* foundConnection,
                                             struct RelayServerResponse* response);
 

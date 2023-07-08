@@ -24,7 +24,7 @@ typedef struct RelayListeners {
     Clog log;
 } RelayListeners;
 
-void relayListenersInit(RelayListeners* self, struct ImprintAllocator* allocator, size_t maxCount);
+void relayListenersInit(RelayListeners* self, struct ImprintAllocator* allocator, size_t maxCount, Clog log);
 // void relayListenersDestroy(RelayListeners* self);
 int relayListenersFind(const RelayListeners* self, RelaySerializeListenerId uniqueId,
                        struct RelayListener** outSession);

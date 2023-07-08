@@ -16,14 +16,15 @@ typedef struct RelayServerConnections {
     struct RelayServerConnection* connections;
     size_t connectionCount;
     size_t capacityCount;
+    Clog log;
 } RelayServerConnections;
 
-void relayServerConnectionsInit(RelayServerConnections* self, size_t maxCount);
+void relayServerConnectionsInit(RelayServerConnections* self, size_t maxCount, Clog log);
 void relayServerConnectionsDestroy(RelayServerConnections* self);
 struct RelayServerConnection* relayServerConnectionsFindConnection(RelayServerConnections* self,
                                                                    RelayServerConnectionId id);
 struct RelayServerConnection* relayServerConnectionsFindOrCreateConnection(
     RelayServerConnections* self, const struct GuiseSclUserSession* initiatorUserSession,
     RelaySerializeUserId targetUserId, struct RelayListener* listener, RelaySerializeApplicationId applicationId,
-    RelaySerializeChannelId channelId);
+    RelaySerializeChannelId channelId, RelaySerializeRequestId createFromRequestId);
 #endif
