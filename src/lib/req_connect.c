@@ -1,7 +1,7 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Peter Bjorklund. All rights reserved.
+/*----------------------------------------------------------------------------------------------------------
+ *  Copyright (c) Peter Bjorklund. All rights reserved. https://github.com/piot/relay-server-lib
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+ *--------------------------------------------------------------------------------------------------------*/
 #include <clog/clog.h>
 #include <flood/in_stream.h>
 #include <flood/out_stream.h>
@@ -10,6 +10,7 @@
 #include <inttypes.h>
 #include <relay-serialize/serialize.h>
 #include <relay-serialize/server_in.h>
+#include <relay-serialize/server_out.h>
 #include <relay-server-lib/connection.h>
 #include <relay-server-lib/listener.h>
 #include <relay-server-lib/listeners.h>
@@ -54,6 +55,12 @@ int relayReqConnect(RelayServer* self, const struct GuiseSclUserSession* userSes
     CLOG_EXECUTE(char tempAddrString[32];)
     CLOG_C_DEBUG(&self->log, "sending connect request to listener %" PRIX64 " on IP:%s", listener->id,
                  guiseSclAddressToString(&listener->providingUserSession->address, tempAddrString, 32))
+
+    // Send response to initiator
+    RelaySerializeConnectResponseFromServerToClient responseToInitiator;
+    responseToInitiator.assignedConnectionId = connection->id;
+    responseToInitiator.requestId = request.requestId;
+    relaySerializeServerOutConnectResponseToInitiator(outStream, responseToInitiator);
 
     return relayServerSendConnectRequestToListener(listener, connection, response);
 }

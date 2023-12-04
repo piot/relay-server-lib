@@ -1,10 +1,12 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Peter Bjorklund. All rights reserved.
+/*----------------------------------------------------------------------------------------------------------
+ *  Copyright (c) Peter Bjorklund. All rights reserved. https://github.com/piot/relay-server-lib
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+ *--------------------------------------------------------------------------------------------------------*/
 #include <clog/clog.h>
 #include <flood/in_stream.h>
 #include <flood/out_stream.h>
+#include <guise-sessions-client/user_session.h>
+#include <inttypes.h>
 #include <relay-serialize/serialize.h>
 #include <relay-serialize/server_in.h>
 #include <relay-serialize/server_out.h>
@@ -12,7 +14,6 @@
 #include <relay-server-lib/listener.h>
 #include <relay-server-lib/req_listen.h>
 #include <relay-server-lib/server.h>
-#include <inttypes.h>
 
 /// A user listens for incoming connections (usually hosting a game)
 /// A listener is for a specific application and channel.
@@ -33,8 +34,7 @@ int relayReqListen(RelayServer* self, const struct GuiseSclUserSession* userSess
 
     RelayListener* listener = relayListenersFindOrCreate(&self->listeners, userSession, listenRequest.appId,
                                                          listenRequest.channelId);
-
-    CLOG_C_DEBUG(&self->log, "accepted listener %" PRIX64, listener->id)
+    CLOG_C_DEBUG(&self->log, "created listener %" PRIX64 " for userID %" PRIX64, listener->id, userSession->userId)
 
     RelaySerializeListenResponseFromServerToListener response;
     response.requestId = listenRequest.requestId;

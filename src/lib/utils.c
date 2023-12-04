@@ -1,7 +1,7 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Peter Bjorklund. All rights reserved.
+/*----------------------------------------------------------------------------------------------------------
+ *  Copyright (c) Peter Bjorklund. All rights reserved. https://github.com/piot/relay-server-lib
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+ *--------------------------------------------------------------------------------------------------------*/
 #include <flood/out_stream.h>
 #include <guise-sessions-client/user_session.h>
 #include <relay-serialize/server_out.h>
